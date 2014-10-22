@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="enablecontactsgroups" default="all">
+  
+  
+  <property file="build.properties"/>
+  <!-- Uncomment the following property if no tests compilation is needed -->
+  <!-- 
+  <property name="skip.tests" value="true"/>
+   -->
+  
+  <!-- Compiler options -->
+  
+  <property name="compiler.debug" value="on"/>
+  <property name="compiler.generate.no.warnings" value="off"/>
+  <property name="compiler.args" value=""/>
+  <property name="compiler.max.memory" value="700m"/>
+  <patternset id="ignored.files">
+    <exclude name="**/CVS/**"/>
+    <exclude name="**/SCCS/**"/>
+    <exclude name="**/RCS/**"/>
+    <exclude name="**/rcs/**"/>
+    <exclude name="**/.DS_Store/**"/>
+    <exclude name="**/.svn/**"/>
+    <exclude name="**/.pyc/**"/>
+    <exclude name="**/.pyo/**"/>
+    <exclude name="**/*.pyc/**"/>
+    <exclude name="**/*.pyo/**"/>
+    <exclude name="**/.git/**"/>
+    <exclude name="**/*.hprof/**"/>
+    <exclude name="**/_svn/**"/>
+    <exclude name="**/.hg/**"/>
+    <exclude name="**/*.lib/**"/>
+    <exclude name="**/*~/**"/>
+    <exclude name="**/__pycache__/**"/>
+    <exclude name="**/.bundle/**"/>
+    <exclude name="**/*.rbc/**"/>
+  </patternset>
+  <patternset id="library.patterns">
+    <include name="*.war"/>
+    <include name="*.ear"/>
+    <include name="*.apk"/>
+    <include name="*.zip"/>
+    <include name="*.swc"/>
+    <include name="*.ane"/>
+    <include name="*.egg"/>
+    <include name="*.jar"/>
+  </patternset>
+  <patternset id="compiler.resources">
+    <exclude name="**/?*.java"/>
+    <exclude name="**/?*.form"/>
+    <exclude name="**/?*.class"/>
+    <exclude name="**/?*.groovy"/>
+    <exclude name="**/?*.scala"/>
+    <exclude name="**/?*.flex"/>
+    <exclude name="**/?*.kt"/>
+    <exclude name="**/?*.clj"/>
+  </patternset>
+  
+  <!-- JDK definitions -->
+  
+  <property name="jdk.bin.android_api_18_platform" value="${jdk.home.android_api_18_platform}/../../../../usr/lib/jvm/java-1.7.0-openjdk-1.7.0.65-2.5.1.2.fc19.x86_64/bin"/>
+  <path id="jdk.classpath.android_api_18_platform">
+    <fileset dir="${jdk.home.android_api_18_platform}">
+      <include name="platforms/android-18/android.jar"/>
+      <include name="platforms/android-18/data/res"/>
+    </fileset>
+  </path>
+  
+  <property name="project.jdk.home" value="${jdk.home.android_api_18_platform}"/>
+  <property name="project.jdk.bin" value="${jdk.bin.android_api_18_platform}"/>
+  <property name="project.jdk.classpath" value="jdk.classpath.android_api_18_platform"/>
+  
+  
+  <!-- Project Libraries -->
+  
+  <path id="library.xposedbridgeapi-54.classpath">
+    <pathelement location="${basedir}/libs/XposedBridgeApi-54.jar"/>
+  </path>
+  
+  
+  <!-- Global Libraries -->
+  
+  <!-- Modules -->
+  
+  
+  <!-- Module EnableContactsGroups -->
+  
+  <dirname property="module.enablecontactsgroups.basedir" file="${ant.file}"/>
+  
+  
+  <property name="module.jdk.home.enablecontactsgroups" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.enablecontactsgroups" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.enablecontactsgroups" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.enablecontactsgroups" value="-encoding UTF-8 -source 1.6 ${compiler.args}"/>
+  
+  <property name="enablecontactsgroups.output.dir" value="${module.enablecontactsgroups.basedir}/out/production/EnableContactsGroups"/>
+  <property name="enablecontactsgroups.testoutput.dir" value="${module.enablecontactsgroups.basedir}/out/test/EnableContactsGroups"/>
+  
+  <path id="enablecontactsgroups.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="enablecontactsgroups.module.production.classpath">
+    <path refid="${module.jdk.classpath.enablecontactsgroups}"/>
+    <path refid="library.xposedbridgeapi-54.classpath"/>
+  </path>
+  
+  <path id="enablecontactsgroups.runtime.production.module.classpath">
+    <pathelement location="${enablecontactsgroups.output.dir}"/>
+    <path refid="library.xposedbridgeapi-54.classpath"/>
+  </path>
+  
+  <path id="enablecontactsgroups.module.classpath">
+    <path refid="${module.jdk.classpath.enablecontactsgroups}"/>
+    <pathelement location="${enablecontactsgroups.output.dir}"/>
+    <path refid="library.xposedbridgeapi-54.classpath"/>
+  </path>
+  
+  <path id="enablecontactsgroups.runtime.module.classpath">
+    <pathelement location="${enablecontactsgroups.testoutput.dir}"/>
+    <pathelement location="${enablecontactsgroups.output.dir}"/>
+    <path refid="library.xposedbridgeapi-54.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.enablecontactsgroups">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.enablecontactsgroups">
+    <patternset refid="excluded.from.module.enablecontactsgroups"/>
+  </patternset>
+  
+  <path id="enablecontactsgroups.module.sourcepath">
+    <dirset dir="${module.enablecontactsgroups.basedir}">
+      <include name="src"/>
+      <include name="gen"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.enablecontactsgroups" depends="compile.module.enablecontactsgroups.production,compile.module.enablecontactsgroups.tests" description="Compile module EnableContactsGroups"/>
+  
+  <target name="compile.module.enablecontactsgroups.production" description="Compile module EnableContactsGroups; production classes">
+    <mkdir dir="${enablecontactsgroups.output.dir}"/>
+    <javac destdir="${enablecontactsgroups.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.enablecontactsgroups}/javac">
+      <compilerarg line="${compiler.args.enablecontactsgroups}"/>
+      <bootclasspath refid="enablecontactsgroups.module.bootclasspath"/>
+      <classpath refid="enablecontactsgroups.module.production.classpath"/>
+      <src refid="enablecontactsgroups.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.enablecontactsgroups"/>
+    </javac>
+    
+    <copy todir="${enablecontactsgroups.output.dir}">
+      <fileset dir="${module.enablecontactsgroups.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.enablecontactsgroups.basedir}/gen">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.enablecontactsgroups.tests" depends="compile.module.enablecontactsgroups.production" description="compile module EnableContactsGroups; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.enablecontactsgroups" description="cleanup module">
+    <delete dir="${enablecontactsgroups.output.dir}"/>
+    <delete dir="${enablecontactsgroups.testoutput.dir}"/>
+  </target>
+  
+  <target name="init" description="Build initialization">
+    <!-- Perform any build initialization in this target -->
+  </target>
+  
+  <target name="clean" depends="clean.module.enablecontactsgroups" description="cleanup all"/>
+  
+  <target name="build.modules" depends="init, clean, compile.module.enablecontactsgroups" description="build all modules"/>
+  
+  <target name="all" depends="build.modules" description="build all"/>
+</project>
