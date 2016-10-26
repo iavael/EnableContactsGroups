@@ -1,4 +1,12 @@
 language: android
+
 addons:
   code_climate:
     repo_token: bdb5dc25a030f0e8f7a9cce3f154d5720a158fe4979c71d10ffd6e78e174c36b
+
+android:
+  components:
+    - build-tools-23.0.1
+    - android-19
+
+install: ant deps
