@@ -7,6 +7,6 @@ addons:
 android:
   components:
     - build-tools-23.0.1
-    - android-19
+    - android-18
 
-install: ant deps
+install: ant build
