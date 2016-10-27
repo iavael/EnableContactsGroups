@@ -4,9 +4,12 @@ addons:
   code_climate:
     repo_token: bdb5dc25a030f0e8f7a9cce3f154d5720a158fe4979c71d10ffd6e78e174c36b
 
+jdk:
+  - oraclejdk8
+
 android:
   components:
     - build-tools-23.0.1
-    - android-18
+    - android-23
 
-install: ant build
+install: ./gradlew build test
