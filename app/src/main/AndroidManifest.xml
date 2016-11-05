@@ -15,7 +15,7 @@
                 android:value="Enable groups support for all contacts providers" />
         <meta-data
                 android:name="xposedminversion"
-                android:value="54" />
+                android:value="36" />
     </application>
 
 </manifest>
