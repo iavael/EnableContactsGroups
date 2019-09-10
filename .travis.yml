@@ -10,7 +10,7 @@ jdk:
 android:
   components:
     - build-tools-28.0.3
-    - android-26
+    - android-28
 
 script: ./gradlew build test
 
