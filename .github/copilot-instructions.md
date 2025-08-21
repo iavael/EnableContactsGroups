@@ -56,7 +56,7 @@ Always perform these validation steps after making changes:
 ### CI Compatibility
 - Always ensure changes are compatible with the GitHub Actions workflow (.github/workflows/android.yml)
 - The CI runs on Ubuntu with JDK 11 and executes `./gradlew build`
-- Legacy Travis CI configuration exists (.travis.yml) but may not be active
+- Legacy Travis CI configuration exists (.travis.yml) using Oracle JDK 8 and build-tools-28.0.3 but may not be active
 
 ## Project Structure
 
@@ -78,18 +78,23 @@ EnableContactsGroups/
 ```
 
 ### Critical Code Location
-- **app/src/main/java/name/iavael/xposed/enablecontactsgroups/EnableContactsGroups.java**: The entire module functionality is in this single 19-line file. It hooks the `isGroupMembershipEditable` method to always return true.
+- **app/src/main/java/name/iavael/xposed/enablecontactsgroups/EnableContactsGroups.java**: The entire module functionality is in this single 20-line file. It hooks the `isGroupMembershipEditable` method in `ExternalAccountType` class to always return true, specifically targeting the package "com.android.contacts.common.model.account".
 
 ## Build Configuration Details
 
+### Build Configuration Details
+
 ### Dependencies and Versions
 - Android Gradle Plugin: 4.1.3
-- Gradle: 6.8
+- Gradle: 6.8 (managed by gradle wrapper)
 - Compile SDK: 28 (Android 9.0)
-- Min SDK: 18 (Android 4.3)
+- Min SDK: 18 (Android 4.3) 
 - Target SDK: 28 (Android 9.0)
+- Version Code: 2, Version Name: "0.2"
 - Xposed API: 82 (provided dependency)
 - Support Library: 28.0.0
+- JUnit: 4.13.2 (test dependency)
+- Espresso: 3.0.2 (instrumented test dependency)
 
 ### Build Outputs
 - Debug APK: `app/build/outputs/apk/debug/app-debug.apk`
@@ -109,7 +114,8 @@ EnableContactsGroups/
 - Follow the existing pattern in EnableContactsGroups.java
 - Use `findAndHookMethod` with appropriate class, method name, and replacement logic
 - Target classes within the Android contacts framework
-- Always test the package name filter in `handleLoadPackage`
+- Always test the package name filter in `handleLoadPackage` (currently targets "com.android.contacts.common.model.account")
+- The current hook replaces `isGroupMembershipEditable` in `ExternalAccountType` to always return `true`
 
 ### Repository Commands Reference
 ```bash
@@ -129,7 +135,7 @@ find app/src -name "*.java"
 # app/src/androidTest/java/name/iavael/xposed/enablecontactsgroups/ExampleInstrumentedTest.java
 # app/src/main/java/name/iavael/xposed/enablecontactsgroups/EnableContactsGroups.java
 
-# Main module line count (should be around 19 lines)
+# Main module line count (should be 19 via wc -l, but actually 20 lines of code)
 wc -l app/src/main/java/name/iavael/xposed/enablecontactsgroups/EnableContactsGroups.java
 
 # Gradle daemon management
