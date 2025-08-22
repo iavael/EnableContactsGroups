@@ -1,19 +1,19 @@
 apply plugin: 'com.android.application'
 
 android {
-    namespace 'name.iavael.xposed.enablecontactsgroups'
-    compileSdkVersion 28
+    namespace = 'name.iavael.xposed.enablecontactsgroups'
+    compileSdkVersion = 28
     defaultConfig {
-        applicationId "name.iavael.xposed.enablecontactsgroups"
-        minSdkVersion 18
-        targetSdkVersion 28
-        versionCode 2
-        versionName "0.2"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        applicationId = "name.iavael.xposed.enablecontactsgroups"
+        minSdkVersion = 18
+        targetSdkVersion = 28
+        versionCode = 2
+        versionName = "0.2"
+        testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled = false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
