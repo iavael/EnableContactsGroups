@@ -17,6 +17,8 @@ allprojects {
     repositories {
         google()
         mavenCentral()
+        // Note: Xposed API dependency is typically provided by the Xposed framework at runtime
+        // For development/build purposes, the API stubs may need to be obtained manually
     }
 }
 
