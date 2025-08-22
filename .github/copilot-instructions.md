@@ -7,31 +7,31 @@ Always reference these instructions first and fallback to search or bash command
 ## Working Effectively
 
 ### Environment Setup
-- Install JDK 11: The project requires Java Development Kit 11, not newer versions
-  - Ubuntu/Debian: `sudo apt-get update && sudo apt-get install -y openjdk-11-jdk`
-  - Set JAVA_HOME: `export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64`
-  - Add to PATH: `export PATH=/usr/lib/jvm/java-11-openjdk-amd64/bin:$PATH`
+- Install JDK 17: The project requires Java Development Kit 17 (though JDK 11+ should work)
+  - Ubuntu/Debian: `sudo apt-get update && sudo apt-get install -y openjdk-17-jdk`
+  - Set JAVA_HOME: `export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64`
+  - Add to PATH: `export PATH=/usr/lib/jvm/java-17-openjdk-amd64/bin:$PATH`
 - Android SDK with Build Tools 28.0.3 and Android API 28 is required
-- **NETWORK REQUIREMENT**: Access to dl.google.com and jcenter() repositories is mandatory for dependency resolution
+- **NETWORK REQUIREMENT**: Access to dl.google.com and mavenCentral() repositories is mandatory for dependency resolution
 
 ### Build Commands
 Bootstrap and build the project:
 - `chmod +x gradlew` -- Make gradlew executable
-- **CRITICAL**: Ensure network access to dl.google.com and jcenter() - builds will fail without internet access to Maven repositories
+- **CRITICAL**: Ensure network access to dl.google.com and mavenCentral() - builds will fail without internet access to Maven repositories
 - `./gradlew clean` -- Clean previous builds, takes 30-60 seconds
 - `./gradlew build` -- **NEVER CANCEL: Build takes 2-5 minutes including dependency downloads. Set timeout to 10+ minutes on first build.**
 - `./gradlew assembleRelease` -- Build release APK, takes 1-3 minutes. **NEVER CANCEL: Set timeout to 5+ minutes.**
 
-**Build Failure Warning**: If you see "dl.google.com: No address associated with hostname" or similar network errors, the build environment lacks required internet access. This is a hard dependency - the project cannot build without downloading Android Gradle Plugin 4.1.3 and other dependencies.
+**Build Failure Warning**: If you see "dl.google.com: No address associated with hostname" or similar network errors, the build environment lacks required internet access. This is a hard dependency - the project cannot build without downloading Android Gradle Plugin 8.12.1 and other dependencies.
 
 ### Test Commands
 - `./gradlew test` -- Run unit tests, takes 30-60 seconds. **NEVER CANCEL: Set timeout to 3+ minutes.**
 - `./gradlew connectedAndroidTest` -- Run instrumented tests on connected device/emulator, takes 2-5 minutes. **NEVER CANCEL: Set timeout to 10+ minutes.**
 
 ### Build Troubleshooting
-- If build fails with "Unsupported class file major version 61", ensure you're using JDK 11, not JDK 17+:
-  - `export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64`
-  - `export PATH=/usr/lib/jvm/java-11-openjdk-amd64/bin:$PATH`
+- If build fails with "Unsupported class file major version 61", ensure you're using JDK 17+ (project now supports modern Java):
+  - `export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64`
+  - `export PATH=/usr/lib/jvm/java-17-openjdk-amd64/bin:$PATH`
 - If build fails with "dl.google.com: No address associated with hostname", network access to Google's Maven repository is blocked - this is a hard requirement
 - If build fails with "Could not resolve all artifacts for configuration", dependencies cannot be downloaded - network access required
 - If Gradle daemon issues occur, run `./gradlew --stop` then retry (stops running daemons)
@@ -55,7 +55,7 @@ Always perform these validation steps after making changes:
 
 ### CI Compatibility
 - Always ensure changes are compatible with the GitHub Actions workflow (.github/workflows/android.yml)
-- The CI runs on Ubuntu with JDK 11 and executes `./gradlew build`
+- The CI runs on Ubuntu with JDK 17 and executes `./gradlew build`
 - Legacy Travis CI configuration exists (.travis.yml) using Oracle JDK 8 and build-tools-28.0.3 but may not be active
 
 ## Project Structure
@@ -78,15 +78,15 @@ EnableContactsGroups/
 ```
 
 ### Critical Code Location
-- **app/src/main/java/name/iavael/xposed/enablecontactsgroups/EnableContactsGroups.java**: The entire module functionality is in this single 20-line file. It hooks the `isGroupMembershipEditable` method in `ExternalAccountType` class to always return true, specifically targeting the package "com.android.contacts.common.model.account".
+- **app/src/main/java/name/iavael/xposed/enablecontactsgroups/EnableContactsGroups.java**: The entire module functionality is in this single 19-line file. It hooks the `isGroupMembershipEditable` method in `ExternalAccountType` class to always return true, specifically targeting the package "com.android.contacts.common.model.account".
 
 ## Build Configuration Details
 
 ### Build Configuration Details
 
 ### Dependencies and Versions
-- Android Gradle Plugin: 4.1.3
-- Gradle: 6.8 (managed by gradle wrapper)
+- Android Gradle Plugin: 8.12.1
+- Gradle: 8.13 (managed by gradle wrapper)
 - Compile SDK: 28 (Android 9.0)
 - Min SDK: 18 (Android 4.3) 
 - Target SDK: 28 (Android 9.0)
@@ -135,7 +135,7 @@ find app/src -name "*.java"
 # app/src/androidTest/java/name/iavael/xposed/enablecontactsgroups/ExampleInstrumentedTest.java
 # app/src/main/java/name/iavael/xposed/enablecontactsgroups/EnableContactsGroups.java
 
-# Main module line count (should be 19 via wc -l, but actually 20 lines of code)
+# Main module line count (should be 19 via wc -l)
 wc -l app/src/main/java/name/iavael/xposed/enablecontactsgroups/EnableContactsGroups.java
 
 # Gradle daemon management
